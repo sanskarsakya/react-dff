@@ -5,6 +5,7 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "lodash": "4.17.21",
     "none-dux": "11.5.4",
     "react": "17.0.2",
     "react-dom": "17.0.2",

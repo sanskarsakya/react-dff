@@ -36,6 +36,11 @@ const updateMarkSettingsChangesResponse = createAction(
 const updateMarkSettingsId = createAction(
   "MARKSETTINGS_UPDATE_MARK_SETTING_ID"
 );
+
+const debounced = (fn) =>
+  setTimeout(() => {
+    fn();
+  }, 1000);
 export const updateMarkSettingsChanges = ({ name, value, markSetting }) => (
   dispatch
 ) => {
@@ -52,6 +57,19 @@ export const updateMarkSettingsChanges = ({ name, value, markSetting }) => (
         console.log(err);
         // dispatch(addMarkSettingsResponse(err));
       });
+  } else {
+    debounced(() => {
+      fromAPI
+        .addMarkSettings(markSetting)
+        .then((value) => {
+          console.log("debounce response");
+          clearTimeout(debounced);
+        })
+        .catch((err) => {
+          console.log(err);
+          // dispatch(addMarkSettingsResponse(err));
+        });
+    });
   }
 };
 
